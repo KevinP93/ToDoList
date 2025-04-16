@@ -1,0 +1,54 @@
+<div class="board-container">
+  <h1>📝 ToDo List de {{ prenom }}</h1>
+
+  <div class="add-section">
+    <input [(ngModel)]="newTask" placeholder="Nouvelle tâche..." />
+    <button (click)="addTask()">Ajouter</button>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <h2>À faire</h2>
+      <div
+        cdkDropList
+        [cdkDropListData]="todoTasks"
+        [cdkDropListConnectedTo]="['doneList', 'trashList']"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)"
+        id="todoList"
+      >
+      <div class="task" *ngFor="let task of todoTasks" cdkDrag>
+        <span class="icon">⏳</span>
+        {{ task }}
+      </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <h2>Fait ✅</h2>
+      <div
+        cdkDropList
+        [cdkDropListData]="doneTasks"
+        [cdkDropListConnectedTo]="['todoList', 'trashList']"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)"
+        id="doneList"
+      >
+        <div class="task done" *ngFor="let task of doneTasks" cdkDrag>
+          <span class="icon valid">✔️</span>
+          {{ task }}
+        </div>      
+      </div>
+    </div>
+    <div
+      class="trash-zone"
+      cdkDropList
+      id="trashList"
+      [cdkDropListData]="[]"
+      [cdkDropListConnectedTo]="['todoList', 'doneList']"
+      (cdkDropListDropped)="deleteDroppedTask($event)"
+    >
+      🗑️ Glisser ici pour supprimer
+    </div>
+  </div>
+</div>
