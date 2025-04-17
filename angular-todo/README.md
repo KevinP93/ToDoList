@@ -1,52 +1,61 @@
 # ✅ Angular ToDo List — Moderne & Animée
 
-Une application Angular 19.2.0 simple mais puissante pour gérer vos tâches quotidiennes, avec une interface moderne, un thème sombre et des interactions en drag & drop 🧠
+Une application Angular 19.2.0 complète pour organiser vos projets, avec une interface moderne, une gestion multi-projets, et des interactions fluides ✨
 
 ---
 
 ## 🖼️ Aperçu de l'application
 
-### ✅ Vue principale
+### 🖥️ Vue principale
 
-![Todo app screenshot](./src/assets/screenshots/main-view.png)
+![Todo app screenshot](./src/assets/screenshots/main-view2.png)
 
-### 📱 Version mobile
+### 📱 Vue mobile
 
-![Mobile view](./src/assets/screenshots/mobile-view.png)
+![Mobile view](./src/assets/screenshots/mobile-view2.png)
+
+---
 
 ## ✨ Fonctionnalités
 
-- 🎨 Interface sombre et responsive
-- 📥 Ajout de tâches via un champ stylisé
-- 📤 Drag & Drop intuitif (mobile & desktop)
-- 🗑️ Suppression par glisser-déposer vers une corbeille
-- ✅ Séparation des tâches "À faire" et "Faites"
-- 🧠 Enregistrement **local (LocalStorage)** : les tâches sont conservées même après fermeture de l'application
-- 🙋 Demande le **prénom de l'utilisateur** à la première visite (stocké aussi)
+- 🎨 Interface responsive
+- ➕ Ajout de tâches avec animation
+- 🟦 Organisation en **3 colonnes** : À faire, En cours, Fait
+- ✏️ Modification d’une tâche existante
+- 🧺 Glisser-déposer pour déplacer ou supprimer une tâche
+- 📦 Données enregistrées en **localStorage**
+- 🙋 Saisie du **prénom de l’utilisateur** à la première visite
+- 📁 **Multi-projets** : chaque liste est indépendante
+- 🧠 **Renommage** et **création de projets** depuis un menu latéral
+- 🍔 **Menu burger** pour basculer entre projets facilement
+- 🔄 Drag & drop compatible **mobile & desktop**
 
 ---
 
 ## 🚀 Lancer le projet en local
 
-Assurez-vous d’avoir installé Node.js & Angular CLI :
+### 1. Prérequis
+
+- Node.js
+- Angular CLI
 
 ```bash
 npm install -g @angular/cli
 ```
 
-### Installation des dépendances :
+### 2. Installation
 
 ```bash
 npm install
 ```
 
-### Démarrage du serveur de développement :
+### 3. Lancement
 
 ```bash
 ng serve
 ```
 
-Puis ouvrez votre navigateur à l’adresse :
+Ouvrir ensuite dans votre navigateur :
 
 ```
 http://localhost:4200
@@ -65,13 +74,13 @@ ng test
 ## 🧰 Outils & technologies
 
 - Angular CLI `v19.2.0`
-- `@angular/cdk/drag-drop` pour le glisser-déposer
-- Stockage via `window.localStorage`
-- CSS pur (sans framework UI)
+- `@angular/cdk/drag-drop`
+- Stockage via `localStorage`
+- Pure CSS (aucun framework externe)
 
 ---
 
-## 📱 Compatibilité
+## 📱 Compatibilité navigateurs
 
 | Navigateur     | Supporté ✅ |
 |----------------|------------|
@@ -79,52 +88,71 @@ ng test
 | Firefox        | ✅          |
 | Safari (iOS)   | ✅          |
 | Edge / Brave   | ✅          |
-| Mobile (Android/iOS) | ✅  |
+| Mobile Android/iOS | ✅      |
 
 ---
 
-## 💡 Améliorations possibles
+## 💡 Améliorations futures
 
-- 📲 PWA installable
-- 🧾 Catégories ou sous-tâches
-- ☁️ Base de données (Firebase…)
-- 🔔 Notifications
+- 📲 PWA (application installable)
+- ☁️ Sauvegarde en ligne (Firebase, Supabase…)
+- 🔔 Rappels & notifications
+- 🧾 Sous-tâches ou checklist
 
----------------------------------------------------------------
+---
 
 ## ✅ Angular ToDo List — Modern & Animated
 
-A simple but powerful Angular 19.2.0 application to manage your daily tasks with a clean dark UI and intuitive drag & drop features 🧠
+A complete Angular 19.2.0 app to manage tasks and projects with a slick dark UI and project-based organization system 🧠
+
+---
+
+## 🖼️ App Screenshots
+
+### 🖥️ Desktop view
+
+![Todo app screenshot](./src/assets/screenshots/main-view.png)
+
+### 📱 Mobile view
+
+![Mobile view](./src/assets/screenshots/mobile-view.png)
 
 ---
 
 ## ✨ Features
 
-- 🎨 Modern dark theme and responsive design
-- 📥 Add tasks via a sleek input
-- 📤 Intuitive drag & drop (desktop & mobile)
-- 🗑️ Remove tasks by dropping them into the trash
-- ✅ Organized in “To Do” and “Done”
-- 🧠 Data saved locally using LocalStorage (persistent)
-- 🙋 Prompts user for their first name on first visit
+- 🎨 Dark and responsive layout
+- ➕ Task creation with animation
+- 🟦 Organized in **3 columns**: To Do, In Progress, Done
+- ✏️ Edit existing tasks
+- 🧺 Drag & drop to move or delete tasks
+- 🧠 Persistent data via `localStorage`
+- 🙋 User's **first name** is requested at first visit
+- 📁 **Multi-project support** with independent lists
+- 🧠 **Rename** or **create projects** via sidebar
+- 🍔 **Burger menu** to switch between projects
+- 📱 Full mobile support for drag & drop
 
 ---
 
-## 🚀 Run the project locally
+## 🚀 Getting Started
 
-Make sure Node.js & Angular CLI are installed:
+### 1. Requirements
+
+- Node.js
+- Angular CLI
 
 ```bash
 npm install -g @angular/cli
 ```
 
-### Install dependencies:
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Start the dev server:
+### 3. Run development server
 
 ```bash
 ng serve
@@ -149,13 +177,13 @@ ng test
 ## 🧰 Tech stack
 
 - Angular CLI `v19.2.0`
-- `@angular/cdk/drag-drop` for drag & drop
-- Local storage with `window.localStorage`
-- Pure CSS
+- `@angular/cdk/drag-drop`
+- Persistent storage via `localStorage`
+- Pure CSS (no UI framework)
 
 ---
 
-## 📱 Browser Support
+## 📱 Browser compatibility
 
 | Browser        | Supported ✅ |
 |----------------|--------------|
@@ -163,19 +191,17 @@ ng test
 | Firefox        | ✅            |
 | Safari (iOS)   | ✅            |
 | Edge / Brave   | ✅            |
-| Mobile (Android/iOS) | ✅    |
+| Mobile Android/iOS | ✅       |
 
 ---
 
 ## 💡 Possible Enhancements
 
 - 📲 Installable PWA
-- 🧾 Categories or sub-tasks
-- ☁️ Cloud storage (e.g. Firebase)
-- 🔔 Local reminders/notifications
+- ☁️ Cloud-based sync (Firebase, etc.)
+- 🔔 Notifications / reminders
+- 🧾 Subtasks or checklists
 
 ---
 
-## 🧑‍💻 Built with ❤️ by Me
-
-> A small project to stay organized... or help your sister be 😉
+## 👨‍💻 Built with ❤️ by ME
