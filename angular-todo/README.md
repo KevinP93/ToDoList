@@ -176,6 +176,6 @@ ng test
 
 ---
 
-## 🧑‍💻 Built with ❤️ by [Your Name]
+## 🧑‍💻 Built with ❤️ by Me
 
 > A small project to stay organized... or help your sister be 😉
