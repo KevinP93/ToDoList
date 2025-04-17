@@ -324,7 +324,6 @@ h1 {
   font-weight: bold;
 }
 
-/* Style contextuel (couleur spécifique si tu veux étendre) */
 .priority-badge.low {
   color: #3ce281;
 }
