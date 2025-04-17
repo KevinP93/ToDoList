@@ -1,3 +1,43 @@
+
+<button class="menu-button" (click)="toggleMenu()">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</button>
+
+<div class="sidebar" [class.open]="menuOpen">
+  <h3>Mes Projets</h3>
+  <ul>
+    <li *ngFor="let project of projectNames; let i = index"
+        [class.active]="currentProject === project">
+  
+      <!-- Si on édite ce projet -->
+      <ng-container *ngIf="editingProjectIndex === i; else displayProject">
+        <input
+          [(ngModel)]="editedProjectName"
+          class="edit-input"
+          placeholder="Nom du projet"
+        />
+        <button class="save-btn" (click)="confirmProjectEdit()">✅</button>
+        <button class="cancel-btn" (click)="cancelProjectEdit()">❌</button>
+      </ng-container>
+      
+  
+      <!-- Sinon on l’affiche normalement -->
+      <ng-template #displayProject>
+        <span (click)="switchProject(project)">{{ project }}</span>
+        <button class="edit-btn" (click)="startEditProject(i)">✏️</button>
+      </ng-template>
+  
+    </li>
+  </ul>
+  
+  <input [(ngModel)]="newProjectName" placeholder="Nouveau projet..." />
+  <button class="add-project-btn" (click)="addProject()">Ajouter</button>
+
+</div>
+
+
 <div class="board-container">
   <h1>📝 ToDo List de {{ prenom }}</h1>
 
@@ -7,48 +47,90 @@
   </div>
 
   <div class="columns">
+    <!-- À faire -->
     <div class="column">
       <h2>À faire</h2>
       <div
         cdkDropList
+        id="todoList"
         [cdkDropListData]="todoTasks"
-        [cdkDropListConnectedTo]="['doneList', 'trashList']"
+        [cdkDropListConnectedTo]="['inProgressList', 'doneList', 'trashList']"
         class="task-list"
         (cdkDropListDropped)="drop($event)"
-        id="todoList"
       >
-      <div class="task" *ngFor="let task of todoTasks" cdkDrag>
-        <span class="icon">⏳</span>
-        {{ task }}
-      </div>
+        <div class="task" *ngFor="let task of todoTasks; let i = index" cdkDrag>
+          <ng-container *ngIf="!(editedTask?.list === 'todo' && editedTask?.index === i); else editTodo">
+            <span class="icon">⏳</span> {{ task }}
+            <button class="edit-btn" (click)="startEdit('todo', i, task)">✏️</button>
+          </ng-container>
+          <ng-template #editTodo>
+            <input class="edit-input" [(ngModel)]="editedText" />
+            <button class="save-btn" (click)="confirmEdit()">✅</button>
+            <button class="cancel-btn" (click)="cancelEdit()">❌</button>
+          </ng-template>
+        </div>
       </div>
     </div>
 
+    <!-- En cours -->
+    <div class="column">
+      <h2>🟠 En cours</h2>
+      <div
+        cdkDropList
+        id="inProgressList"
+        [cdkDropListData]="inProgressTasks"
+        [cdkDropListConnectedTo]="['todoList', 'doneList', 'trashList']"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="task in-progress" *ngFor="let task of inProgressTasks; let i = index" cdkDrag>
+          <ng-container *ngIf="!(editedTask?.list === 'inProgress' && editedTask?.index === i); else editInProgress">
+            <span class="icon">🟡</span> {{ task }}
+            <button class="edit-btn" (click)="startEdit('inProgress', i, task)">✏️</button>
+          </ng-container>
+          <ng-template #editInProgress>
+            <input class="edit-input" [(ngModel)]="editedText" />
+            <button class="save-btn" (click)="confirmEdit()">✅</button>
+            <button class="cancel-btn" (click)="cancelEdit()">❌</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fait -->
     <div class="column">
       <h2>Fait ✅</h2>
       <div
         cdkDropList
+        id="doneList"
         [cdkDropListData]="doneTasks"
-        [cdkDropListConnectedTo]="['todoList', 'trashList']"
+        [cdkDropListConnectedTo]="['todoList', 'inProgressList', 'trashList']"
         class="task-list"
         (cdkDropListDropped)="drop($event)"
-        id="doneList"
       >
-        <div class="task done" *ngFor="let task of doneTasks" cdkDrag>
-          <span class="icon valid">✔️</span>
-          {{ task }}
-        </div>      
+        <div class="task done" *ngFor="let task of doneTasks; let i = index" cdkDrag>
+          <ng-container *ngIf="!(editedTask?.list === 'done' && editedTask?.index === i); else editDone">
+            <span class="icon valid">✔️</span> {{ task }}
+            <button class="edit-btn" (click)="startEdit('done', i, task)">✏️</button>
+          </ng-container>
+          <ng-template #editDone>
+            <input class="edit-input" [(ngModel)]="editedText" />
+            <button class="save-btn" (click)="confirmEdit()">✅</button>
+            <button class="cancel-btn" (click)="cancelEdit()">❌</button>
+          </ng-template>
+        </div>
       </div>
     </div>
-    <div
-      class="trash-zone"
-      cdkDropList
-      id="trashList"
-      [cdkDropListData]="[]"
-      [cdkDropListConnectedTo]="['todoList', 'doneList']"
-      (cdkDropListDropped)="deleteDroppedTask($event)"
-    >
-      🗑️ Glisser ici pour supprimer
-    </div>
+  </div>
+
+  <div
+    class="trash-zone"
+    cdkDropList
+    id="trashList"
+    [cdkDropListData]="[]"
+    [cdkDropListConnectedTo]="['todoList', 'doneList', 'inProgressList']"
+    (cdkDropListDropped)="deleteDroppedTask($event)"
+  >
+    🗑️ Glissez ici pour supprimer
   </div>
 </div>
