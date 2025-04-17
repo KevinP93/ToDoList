@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+/* --- Évite marges / padding par défaut --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* --- Applique le fond sombre sur toute la page --- */
+  html, body {
+    height: 100%;
+    background-color: #1e1e2f;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Empêche le scroll horizontal involontaire */
+  body {
+    overflow-x: hidden;
+  }
+  

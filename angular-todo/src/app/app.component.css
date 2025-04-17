@@ -1,0 +1,20 @@
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1e1e2f;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 14px;
+  color: #888;
+  border-top: 1px solid #333;
+}

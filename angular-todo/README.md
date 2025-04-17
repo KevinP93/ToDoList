@@ -8,11 +8,11 @@ Une application Angular 19.2.0 complète pour organiser vos projets, avec une in
 
 ### 🖥️ Vue principale
 
-![Todo app screenshot](./src/assets/screenshots/main-view2.png)
+![Todo app screenshot](./src/assets/screenshots/main-view3.png)
 
 ### 📱 Vue mobile
 
-![Mobile view](./src/assets/screenshots/mobile-view2.png)
+![Mobile view](./src/assets/screenshots/mobile-view3.png)
 
 ---
 
@@ -111,11 +111,11 @@ A complete Angular 19.2.0 app to manage tasks and projects with a slick dark UI 
 
 ### 🖥️ Desktop view
 
-![Todo app screenshot](./src/assets/screenshots/main-view.png)
+![Todo app screenshot](./src/assets/screenshots/main-view3.png)
 
 ### 📱 Mobile view
 
-![Mobile view](./src/assets/screenshots/mobile-view.png)
+![Mobile view](./src/assets/screenshots/mobile-view3.png)
 
 ---
 

@@ -43,13 +43,21 @@
 
   <div class="add-section">
     <input [(ngModel)]="newTask" placeholder="Nouvelle tâche..." />
+  
+    <select [(ngModel)]="newTaskPriority" class="priority-select">
+      <option value="low">🟢 Faible</option>
+      <option value="normal" selected>🟡 Moyenne</option>
+      <option value="high">🔴 Haute</option>
+    </select>
+  
     <button (click)="addTask()">Ajouter</button>
   </div>
+  
 
   <div class="columns">
     <!-- À faire -->
     <div class="column">
-      <h2>À faire</h2>
+      <h2>⏳ À faire</h2>
       <div
         cdkDropList
         id="todoList"
@@ -60,11 +68,20 @@
       >
         <div class="task" *ngFor="let task of todoTasks; let i = index" cdkDrag>
           <ng-container *ngIf="!(editedTask?.list === 'todo' && editedTask?.index === i); else editTodo">
-            <span class="icon">⏳</span> {{ task }}
+            <span class="icon"></span> {{ task.text }}
+            
             <button class="edit-btn" (click)="startEdit('todo', i, task)">✏️</button>
           </ng-container>
+          <span class="priority-badge" [ngClass]="task.priority" style="margin-left: auto; display: inline-block; float: right;">
+            {{ task.priority === 'high' ? '🔴' : task.priority === 'low' ? '🟢' : '🟡' }}
+          </span>
           <ng-template #editTodo>
             <input class="edit-input" [(ngModel)]="editedText" />
+            <select [(ngModel)]="editedPriority" class="priority-select" style="margin-left: 8px;">
+              <option value="low">🟢 Faible</option>
+              <option value="normal">🟡 Moyenne</option>
+              <option value="high">🔴 Haute</option>
+            </select>
             <button class="save-btn" (click)="confirmEdit()">✅</button>
             <button class="cancel-btn" (click)="cancelEdit()">❌</button>
           </ng-template>
@@ -74,7 +91,7 @@
 
     <!-- En cours -->
     <div class="column">
-      <h2>🟠 En cours</h2>
+      <h2>🛠️ En cours</h2>
       <div
         cdkDropList
         id="inProgressList"
@@ -85,11 +102,19 @@
       >
         <div class="task in-progress" *ngFor="let task of inProgressTasks; let i = index" cdkDrag>
           <ng-container *ngIf="!(editedTask?.list === 'inProgress' && editedTask?.index === i); else editInProgress">
-            <span class="icon">🟡</span> {{ task }}
+            <span class="icon"></span> {{ task.text }}
             <button class="edit-btn" (click)="startEdit('inProgress', i, task)">✏️</button>
           </ng-container>
+          <span class="priority-badge" [ngClass]="task.priority" style="margin-left: auto; display: inline-block; float: right;">
+            {{ task.priority === 'high' ? '🔴' : task.priority === 'low' ? '🟢' : '🟡' }}
+          </span>
           <ng-template #editInProgress>
             <input class="edit-input" [(ngModel)]="editedText" />
+            <select [(ngModel)]="editedPriority" class="priority-select" style="margin-left: 8px;">
+              <option value="low">🟢 Faible</option>
+              <option value="normal">🟡 Moyenne</option>
+              <option value="high">🔴 Haute</option>
+            </select>
             <button class="save-btn" (click)="confirmEdit()">✅</button>
             <button class="cancel-btn" (click)="cancelEdit()">❌</button>
           </ng-template>
@@ -110,11 +135,19 @@
       >
         <div class="task done" *ngFor="let task of doneTasks; let i = index" cdkDrag>
           <ng-container *ngIf="!(editedTask?.list === 'done' && editedTask?.index === i); else editDone">
-            <span class="icon valid">✔️</span> {{ task }}
+            <span class="icon valid">✔️</span> {{ task.text }}
             <button class="edit-btn" (click)="startEdit('done', i, task)">✏️</button>
           </ng-container>
+          <span class="priority-badge" [ngClass]="task.priority" style="margin-left: auto; display: inline-block; float: right;">
+            {{ task.priority === 'high' ? '🔴' : task.priority === 'low' ? '🟢' : '🟡' }}
+          </span>
           <ng-template #editDone>
             <input class="edit-input" [(ngModel)]="editedText" />
+            <select [(ngModel)]="editedPriority" class="priority-select" style="margin-left: 8px;">
+              <option value="low">🟢 Faible</option>
+              <option value="normal">🟡 Moyenne</option>
+              <option value="high">🔴 Haute</option>
+            </select>
             <button class="save-btn" (click)="confirmEdit()">✅</button>
             <button class="cancel-btn" (click)="cancelEdit()">❌</button>
           </ng-template>
@@ -127,7 +160,7 @@
     class="trash-zone"
     cdkDropList
     id="trashList"
-    [cdkDropListData]="[]"
+    [cdkDropListData]="emptyTaskList"
     [cdkDropListConnectedTo]="['todoList', 'doneList', 'inProgressList']"
     (cdkDropListDropped)="deleteDroppedTask($event)"
   >

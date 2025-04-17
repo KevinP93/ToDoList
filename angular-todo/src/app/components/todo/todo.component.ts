@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 
+interface Task {
+  text: string;
+  priority: 'low' | 'normal' | 'high';
+}
+
 @Component({
   selector: 'app-todo',
   standalone: true,
@@ -12,9 +17,12 @@ import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 })
 export class TodoComponent implements OnInit {
 
-  todoTasks: string[] = [];
-  inProgressTasks: string[] = [];
-  doneTasks: string[] = [];
+  editedPriority: 'low' | 'normal' | 'high' = 'normal';
+  emptyTaskList: Task[] = [];
+  newTaskPriority: 'low' | 'normal' | 'high' = 'normal';
+  todoTasks: Task[] = [];
+  inProgressTasks: Task[] = [];
+  doneTasks: Task[] = [];
   newTask = '';
   prenom: string | null = null;
   editedTask: { list: 'todo' | 'inProgress' | 'done'; index: number } | null = null;
@@ -30,7 +38,7 @@ export class TodoComponent implements OnInit {
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       this.loadProjects();
       this.switchProject(this.projectNames[0]);
-  
+
       const storedPrenom = localStorage.getItem('prenom');
       if (storedPrenom) {
         this.prenom = storedPrenom;
@@ -43,17 +51,22 @@ export class TodoComponent implements OnInit {
       }
     }
   }
-  
 
   addTask() {
     if (this.newTask.trim()) {
-      this.todoTasks.push(this.newTask.trim());
+      const task: Task = {
+        text: this.newTask.trim(),
+        priority: this.newTaskPriority
+      };
+      this.todoTasks.push(task);
       this.newTask = '';
+      this.newTaskPriority = 'normal';
       this.save();
     }
   }
+  
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) return;
 
     const prev = event.previousContainer.data;
@@ -74,19 +87,19 @@ export class TodoComponent implements OnInit {
     }
   }
 
-  deleteDroppedTask(event: CdkDragDrop<any>) {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      const previousList = event.previousContainer.data as string[];
-      previousList.splice(event.previousIndex, 1);
-      this.save();
-    }
+  deleteDroppedTask(event: CdkDragDrop<Task[]>) {
+    const previousList = event.previousContainer.data;
+    previousList.splice(event.previousIndex, 1);
+    this.save();
   }
 
-  startEdit(list: 'todo' | 'inProgress' | 'done', index: number, value: string) {
+  startEdit(list: 'todo' | 'inProgress' | 'done', index: number, value: Task) {
     this.editedTask = { list, index };
-    this.editedText = value;
+    this.editedText = value.text;
+    this.editedPriority = value.priority;
   }
   
+
   confirmEdit() {
     if (!this.editedTask) return;
   
@@ -94,15 +107,22 @@ export class TodoComponent implements OnInit {
     const value = this.editedText.trim();
   
     if (value) {
-      if (list === 'todo') this.todoTasks[index] = value;
-      if (list === 'inProgress') this.inProgressTasks[index] = value;
-      if (list === 'done') this.doneTasks[index] = value;
+      const updatedTask: Task = {
+        text: value,
+        priority: this.editedPriority
+      };
+  
+      if (list === 'todo') this.todoTasks[index] = updatedTask;
+      if (list === 'inProgress') this.inProgressTasks[index] = updatedTask;
+      if (list === 'done') this.doneTasks[index] = updatedTask;
+  
       this.save();
     }
   
     this.cancelEdit();
   }
   
+
   cancelEdit() {
     this.editedTask = null;
     this.editedText = '';
@@ -111,22 +131,22 @@ export class TodoComponent implements OnInit {
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
-  
+
   loadProjects() {
     const savedProjects = JSON.parse(localStorage.getItem('projects') || '["Projet 1"]');
     this.projectNames = savedProjects;
   }
-  
+
   saveProjects() {
     localStorage.setItem('projects', JSON.stringify(this.projectNames));
   }
-  
+
   switchProject(name: string) {
     this.currentProject = name;
     this.loadTasks();
     this.menuOpen = false;
   }
-  
+
   addProject() {
     const name = this.newProjectName.trim();
     if (name && !this.projectNames.includes(name)) {
@@ -136,7 +156,7 @@ export class TodoComponent implements OnInit {
       this.newProjectName = '';
     }
   }
-  
+
   loadTasks() {
     const saved = JSON.parse(localStorage.getItem(`tasks-${this.currentProject}`) || '{}');
     this.todoTasks = saved.todo || [];
@@ -148,7 +168,7 @@ export class TodoComponent implements OnInit {
     this.editingProjectIndex = index;
     this.editedProjectName = this.projectNames[index];
   }
-  
+
   confirmProjectEdit() {
     if (
       this.editingProjectIndex !== null &&
@@ -157,33 +177,30 @@ export class TodoComponent implements OnInit {
     ) {
       const oldName = this.projectNames[this.editingProjectIndex];
       const newName = this.editedProjectName.trim();
-  
-      // Renomme dans le tableau
+
       this.projectNames[this.editingProjectIndex] = newName;
-  
-      // Sauvegarde les donnees sous le nouveau nom
+
       const oldTasks = localStorage.getItem(`tasks-${oldName}`);
       if (oldTasks) {
         localStorage.setItem(`tasks-${newName}`, oldTasks);
         localStorage.removeItem(`tasks-${oldName}`);
       }
-  
-      // Met à jour le projet actif
+
       if (this.currentProject === oldName) {
         this.currentProject = newName;
       }
-  
+
       this.saveProjects();
       this.editingProjectIndex = null;
       this.editedProjectName = '';
-      this.save(); // Re-sauvegarder les tâches sous le nouveau nom
+      this.save();
     }
   }
-  
+
   cancelProjectEdit() {
     this.editingProjectIndex = null;
     this.editedProjectName = '';
   }
-  
+
   
 }
