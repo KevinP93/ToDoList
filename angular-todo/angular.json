@@ -20,7 +20,11 @@
               "tsConfig": "tsconfig.app.json",
               "assets": [
                 "src/favicon.ico",
-                "src/manifest.webmanifest",
+                {
+                    "glob": "manifest.webmanifest",
+                    "input": "./",
+                    "output": "."
+                  },
                 {
                   "glob": "**/*",
                   "input": "src/assets",
@@ -69,11 +73,16 @@
               "assets": [
                 "src/favicon.ico",
                 {
-                  "glob": "manifest.webmanifest",
-                  "input": "src/assets",
-                  "output": "assets"
+                    "glob": "manifest.webmanifest",
+                    "input": "src",
+                    "output": "."
+                },
+                {
+                    "glob": "**/*",
+                    "input": "src/assets",
+                    "output": "assets"
                 }
-              ],
+                ],
               "styles": ["src/styles.css"],
               "scripts": []
             }
